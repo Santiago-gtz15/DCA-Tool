@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Department Contract Administrator</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; }
+    header { background-color: #bf5700; padding: 10px; color: white; text-align: center; }
+    .container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .question { font-size: 20px; margin-bottom: 10px; }
+    .guide { font-size: 14px; color: #555; margin-bottom: 20px; }
+    .button { margin: 5px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer; }
+    .yes { background-color: #bf5700; color: white; }
+    .no { background-color: #555; color: white; }
+    .back { background-color: #999; color: white; }
+    .multi-button { background-color: #004b87; color: white; display: inline-block; }
+    .result { font-size: 18px; font-weight: bold; color: darkred; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+      <img src="uts-logo-2023-09-horizontal-black(1).png" alt="UT System Logo" width="550" height="150">
+    <h1>Department Contract Administrator (DCA) Tool</h1>
+  </header>
+  <div class="container">
+    <div class="question" id="question"></div>
+    <div class="guide" id="guide"></div>
+    <button class="button yes" onclick="next('yes')">Yes</button>
+    <button class="button no" onclick="next('no')">No</button>
+    <button class="button back" onclick="back()">Back</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const steps = [
+      {
+        question: "The first step of this process is to understand your procurement need. Have you identified your procurement need?",
+        guide: "Additionally, it is important to note:" +
+            "<ul>" +
+            "<li>The typical timeline for a formal solicitation and negotiating the awarded contract(s) can take up six months or longer from start to finish, depending on the complexity of the project.</li>" +
+            "<li>For Purchase Orders (POs), the timeline will typically be shorter.</li>" +
+                "<li><b>Please note</b> that this tool is not meant to replace the expertise and guidance of Contracts and Procurements admin. It is solely meant to facilitate your decision-making. <b>If at any time you are unsure about what to do, contact cnp@utsystem.edu</b></li>" +
+            "</ul>",
+        yes: 1,
+        no: 'end1',
+      },
+        {
+          question: "You must develop a Scope of Work (SOW) that identifies your specific needs. Have you developed an SOW that accurately captures your needs?",
+          guide: "If you have questions about whether your SOW is sufficient or not, contact cnp@utsystem.edu." +
+                    "<ul>" +
+                    "<li>Your scope of work must be <b>SUFFICIENTLY</b> detailed.</li>" +
+                    "<li>A good scope of work (SOW) outlines the project's objectives, deliverables, timelines, and responsibilities in a detailed manner..</li>" +
+                    "</ul>",
+            yes: 2,
+            no: 'end2',
+        },
+      {
+        question: "What is the total <a href='https://utsystemadmin.sharepoint.com/sites/cnp/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2Fcnp%2FShared%20Documents%2FCompliance%2FUT%20System%20Procurement%20Guidelines%20Matrix%2Epdf&parent=%2Fsites%2Fcnp%2FShared%20Documents%2FCompliance' target='_blank'>cost of your purchase<a/>?",
+        guide: "If you have questions about the total cost of your purchase, contact cnp@utsystem.edu for assistance.",
+        type: "multi",
+        options: [
+          { label: "$0 to $14,999.99", next: 3 },
+          { label: "$15,000 to $49,999.99", next: 4 },
+          { label: "$50,000+", next: 5 },
+          {label: "Amendment or Addendum", next: 11, },
+        ]
+      },
+      {
+        question: "For purchases under $15,000, you are <b>encouraged</b> to find competitive quotes but are not required to." +
+            " Does your purchase contain any of the following:" +
+            "<ul>" +
+            "<li>Software purchase or licensing?</li>" +
+            "<li>Access to confidential or controlled data?</li>" +
+            "<li>Deals with university-owned data?</li>",
+        guide: "<ul>" +
+            "<li>If you have questions about what entails software purchases, contact OTIS.</li>" +
+            "<li>If you have questions about what constitutes confidential or controlled data, visit <a href='https://www.utsystem.edu/offices/information-security/system-administration-information-security-program/data-classification' target='_blank'>this link.</a></li>" +
+            "<li>If you have questions about what university-owned data is, contact Information Security.</li>",
+        yes: 6,
+        no: 7,
+      },
+      {
+        question: "You have selected that your purchase will be between $15,000 and $49,999.99. The following information is relevant to your purchase category:" +
+                "<ul>" +
+                "<li>A formal solicitation is not required for agreements valued between $15,000 and $49,999. You may either</li>" +
+                "<ul>" +
+                "<li>Obtain three quotes (2 of which should be a Historically Underutilized Business, if possible) or.</li>" +
+                "<li>If obtaining three quotes is not feasible, an <a href= 'https://www.utsystem.edu/offices/contracts-and-procurement/17-exclusive-acquisition' target='_blank'>Exclusive Acquisition Justification<a/> may be an option if any of the following apply:</li>" +
+                "<ul>" +
+                "<li>Proprietary Source: Applicable when goods or services are only available from a single source.</li>" +
+                "<li>Best Value: Applicable when one service provider meets the overall value required for the service.</li>" +
+                "<li>Emergency.</li>" +
+                "<li>Professional Services(e.g., architect, engineer, etc).</li>" +
+                "</ul>" +
+                "</ul>" +
+                "</ul>" +
+                "Do you understand these requirements?",
+        guide: "See <a href='https://www.utsystem.edu/offices/contracts-and-procurement/151-informal-bids-purchase-value-of-15000-50000' target='_blank'>link</a> for full guidance." +
+                    "<ul>" +
+                    "<li>For questions regarding HUB requirements, contact HUB@utsystem.edu.</li>" +
+                    "<li>For questions regarding EAJs, contact cnp@utsystem.edu.</li>" +
+                "<li><b>Please note</b> that CnP must approve the EAJ before your department signs the form</li>."+
+                    "</ul>",
+        yes: 34,
+        no: 'end10',
+      },
+      {
+        question: "You have selected that your purchase will be over $50,000. The following information is relevant to your purchase category." +
+                "<ul>" +
+                "<li>An effort to include at least two HUBs should be made.</li>" +
+                "<li>An <a href= 'https://www.utsystem.edu/offices/contracts-and-procurement/17-exclusive-acquisition' target='_blank'>Exclusive Acquisition Justification<a/> is acceptable if only one supplier is capable of meeting your need.</li>" +
+                "<li>If the total cost is over $100,000, an HSP must be developed.</li>" +
+                "<li>If the total cost is over $1,000,000, you must obtain approval from the Office of General Counsel.</li>" +
+                "</ul>" +
+                "Do you understand these requirements?",
+        guide: "If you have any questions about this purchase bracket, contact cnp@utsystem.edu.",
+        yes: 41,
+        no: 'end10',
+      },
+      {
+        question: "You have selected that your purchase will need additional reviews. You will be prompted to obtain reviews and approvals from different departments as needed." +
+            " Do you understand this?",
+        guide: "If you have questions about this step, contact cnp@utsystem.edu" +
+                "<ul>" +
+                "<li><b>NOTE</b>, you are not required to obtain these approvals/reviews in a linear order.</li>" +
+                "</ul>",
+        yes: 25,
+        no: 'end3',
+      },
+      {
+        question: "You have selected that your purchase does not need any additional reviews. Will your purchase be a contract or a purchase order?",
+        guide: "If you have any questions about the differences between contracts and purchase orders, contact cnp@utsystem.edu",
+        type: "multi",
+        options: [
+              {label: "Contract", next: 8,},
+              {label: "Purchase Order", next: 9,},
+          ]
+      },
+      {
+        question: "Choose whether you are capable of drafting your own contract, or Contracts and Procurements needs to facilitate its development.",
+        guide: "Your decision should rest on your ability to fulfill your purchase confidently.",
+        type: "multi",
+        options: [
+            {label: "Drafting own contract", next: 10,},
+            {label: "CnP facilitation", next: 11,},
+        ]
+      },
+      {
+        question: "You have selected Purchase Order. Since your PO does not need any additional reviews, you can create a requisition in PeopleSoft." +
+                " Have you created the requisition and sent supporting material to cnp@utsystem.edu ?",
+        guide: "At this point, the vendor should already be set up in PeopleSoft. If not, ensure that you send them an invitation.",
+        yes: 47,
+        no: 'end10',
+      },
+        {
+            question: "You have selected that you can continue this process on your own." +
+                " Are there insurance limits in your purchase?",
+            guide: "For questions regarding insurance limits, contact ORMinfo@utsystem.edu",
+            yes: 12,
+            no: 13,
+        },
+        {
+            question: "You must create and submit a <a href='https://na5.asccontracts.com/cms/Menu?locale=en_US&licenseeParam=UTS&OWASP_CSRFTOKEN=ZyYaIrWlU0DbC8B9CrFczVKffCzZSneUTcaZeslPrM4a' target='_blank'> CCARS <a/> request." +
+                " Have you done this?",
+            guide: "If you have any questions about CCARS, contact cnp@utsystem.edu",
+            yes: 22,
+            no: 'end7'
+        },
+        {
+            question: "If your contract deals with insurance limits, you must contact the Office of Risk Management and obtain their approval over the insurance in your contract. Have you done this?",
+            guide: "If you have questions regarding this step, contact ORMinfo@utsystem.edu",
+            yes: 13,
+            no: 'end5',
+        },
+        {
+            question: "Send the contract to the vendor and wait for their review and signature. Has the vendor reviewed and signed the contract?",
+            yes: 14,
+            no:'end5',
+        },
+        {
+            question: "You must perform a Quality Assurance(QA)." +
+                "<ul>" +
+                "<li>Ensure vendor has properly signed the contract.</li>" +
+                "<li>Ensure vendor has attached any needed documentation.</li>" +
+                "</ul>" +
+                "Have you performed a QA?",
+            guide: "If you have any questions regarding this step, contact cnp@utsystem.edu.",
+            yes: 15,
+            no: 'end6',
+        },
+        {
+            question: "You must create a <a href='https://na5.asccontracts.com/cms/Menu?locale=en_US&licenseeParam=UTS&OWASP_CSRFTOKEN=ZyYaIrWlU0DbC8B9CrFczVKffCzZSneUTcaZeslPrM4a' target='_blank'> CCARS <a/> request." +
+                "Have you created a CCARS request?",
+            guide: "If you have any questions regarding CCARS, contact cnp@utsystem.edu",
+            yes: 16,
+            no: 'end7',
+        },
+        {
+            question: "Contracts and Procurements will ensure that the contract obtains any additional reviews. Has CnP sent you the contract?",
+            yes: 17,
+            no: 'end8',
+        },
+        {
+            question: "You must send the contract package to the contractor. After this, ensure to schedule a Kickoff Meeting and review the following:" +
+                "<ul>" +
+                "<li>You must review the contract.</li>" +
+                "<li>You must review contract deliverables.</li>" +
+                "</ul>" +
+                "Have you done this?",
+            guide: "If you have any questions regarding Kickoff Meetings, contact cnp@utsystem.edu",
+            yes: 18,
+            no: 'end9',
+        },
+        {
+            question: "You will now monitor Contract Compliance per the <a href'https://utsystem.edu/sites/default/files/offices/contracts-procurement/Forms_Guides/Contract%20Monitoring%20Plan%20and%20Close-Out%20Form%20Template.pdf' target='_blank'>Contract Monitoring Plan<a/>. Has the contractor met their obligations?",
+            guide: "If you have any questions regarding the Contract Monitoring Plan, contact cnp@utsystem.edu",
+            yes: 19,
+            no: 'end10',
+        },
+        {
+            question: "You must now verify the contractor's invoice against the contract terms and ensure they match. Do these match?",
+            yes: 20,
+            no: 'end10',
+        },
+        {
+            question: "Now, you must send the invoice to Financial Shared Services (FSS) for payment. Have you done this?",
+            yes: 21,
+            no: 'end10',
+        },
+        {
+            question: "You must do the following:" +
+                    "<ul>" +
+                "<li>Verify against PeopleSoft that the payment was issued according to the contract.</li>" +
+                "<li>Finalize contract documents and close file.</li>" +
+                "<li>Email <a href='https://www.utsystem.edu/sites/default/files/offices/contracts-procurement/Forms_Guides/Contract%20Monitoring%20Plan%20and%20Close-Out%20Form%20Template.pdf' target='_blank'>Clouseout Form</a> to CnP if contract is over $250,000 or high-risk.</li>" +
+                "</ul>" +
+                "Have you completed these steps?",
+            guide: "Contact cnp@utsystem.edu if you have questions regarding high-risk contracts or Closeout Forms.",
+            yes: 'end4',
+            no: 'end10',
+        },
+        {
+            question: "Contracts and Procurements will obtain any additional reviews. After this, CnP will forward you the agreement." +
+                " Have you reviewed the agreement and sent it to the vendor?",
+            yes: 23,
+            no: 'end10',
+        },
+        {
+            question: "After receiving the signed agreement from the vendor, you must ensure:" +
+                "<ul>" +
+                "<li>Vendor properly signed the agreement</li>" +
+                "<li>Vendor attached any required documentation</li>" +
+                "</ul>" +
+                "Have you performed this Quality Assurance?",
+            yes: 24,
+            no: 'end6',
+        },
+        {
+            question: "Forward the signed agreement and any additional documentation to CnP. Have you done this?",
+            yes: 16,
+            no: 'end10',
+        },
+        {
+            question: "Does your request deal with the purchase, development, or use of an electronic system that will access Confidential Data, such as social security numbers, protected health information, or sensitive research data?",
+            guide: "If you have questions regarding what applies as confidential data, visit <a href='https://www.utsystem.edu/offices/information-security/system-administration-information-security-program/data-classification' target='_blank'> this link<a/>.",
+            yes: 26,
+            no: 27,
+        },
+        {
+            question: "Contact System-Wide Compliance (Privacy) and ensure that you obtain their approval before moving forward. Have you obtained such approval?",
+            guide: "<ul>" +
+                    "<li>For data related to PHI or HIPAA, contact Cblanton@utsystem.edu</li>" +
+                    "<li>For data related to PII, AI, etc., contact Jkennedy@utsystem.edu</li>" +
+                    "</ul>",
+            yes: 27,
+            no:'end5',
+        },
+        {
+           question: "Is your contract related to the purchase of software, hardware, or cloud-based services?",
+            guide: "If you have questions about what applies as software, hardware, or cloud-based services, contact OTIS.",
+            yes: 28,
+            no: 29,
+        },
+        {
+            question: "You must obtain OTIS approval for these types of purchases. Has OTIS approved this request?",
+            yes: 29,
+            no: 'end5'
+        },
+        {
+            question: "Does your contract deal with <a href='https://www.utsystem.edu/sites/policy-library/policies/uts-150-access-persons-disabilities-electronic-and-information-resources-procured-or-developed-university-of-texas-system-administration-and-university-of-texas-system-institutions' target='_blank'> Electronic Information Resources (EIR)<a/>?",
+            guide: "For information regarding EIR, visit <a href='https://www.utsystem.edu/offices/contracts-and-procurement/34-contracts-software-cloud-based-solutions-and-websites' target='_blanket'>this link<a/>.",
+            yes: 30,
+            no: 31,
+        },
+        {
+           question: "Do the following:" +
+                   "<ul>" +
+                    "<li>Request a Voluntary Product Accessibility Template (VPAT) from the software provider</li>" +
+                    "Complete the following <a href='https://www.utsystem.edu/sites/default/files/offices/contracts-procurement/Accessibility%20Intake%20Form%20-%20Template.docx' target='_blank'> intake form<a/>." +
+                    "</ul>" +
+                    "Once obtained, email these forms to itpurchasing@utsystem.edu. Have you done this?",
+            guide: "If the provider does not already have a VPAT filled out, direct them to this <a href='https://www.itic.org/policy/accessibility/vpat' target='_blank'>link<a/> so they can fill one out.",
+            yes: 31,
+            no: "end5"
+        },
+        {
+            question: "Does your contract deal with university-owned data?",
+            guide: "For questions related to controlled or confidential data, refer to the following <a href='https://www.utsystem.edu/offices/information-security/system-administration-information-security-program/data-classification' target='_blank'> link<a/>.",
+            yes: 32,
+            no: 43,
+        },
+        {
+            question: "Contact Information Security and Complete an <a href='https://utsys-eds.utsystem.edu/shibboleth-ds/index.html?entityID=https%3A%2F%2Fwww2.utsystem.edu%2Fshibb&return=https%3A%2F%2Fapps.utsystem.edu%2FShibboleth.sso%2FutDS%3FSAMLDS%3D1%26target%3Dcookie%253A1751918149_2900' target='_blank'> ISOTRAQ<a/>. Have you completed the ISOTRAQ?",
+            guide: "The typical timeline for ISOTRAQ review is 10 to 14 days. Contact Information Security for additional information.",
+            yes: 43,
+            no: 'end5',
+        },
+        {
+            question: "Thank you for obtaining the needed reviews and approvals. Will your purchase be a contract or a purchase order?",
+            guide: "If you have questions about the differences between contracts and purchase orders, contact cnp@utsystem.edu",
+            type: "multi",
+            options: [
+              {label: "Contract", next: 8,},
+              {label: "Purchase Order", next: 9,},
+                ]
+        },
+      {
+        question: "Select what type of procurement you will pursue.",
+        guide: "Your decision should rest on your ability to comply with regulations and the nature of the purchase.",
+        type: "multi",
+        options: [
+          {label: "Formal Solicitation", next: 35,},
+          {label: "Informal Bidding", next: 40,},
+          {label: "EAJ", next: 42,},
+          {label: "Group Purchasing Order", next: 48,},
+        ],
+      },
+      {
+        question: "You have selected <b>Formal Solicitation</b>. There are two types of solicitations you can pursue:" +
+                "<ul>" +
+                "<li>An Invitation to Bid (ITB)</li>" +
+                "</ul>" +
+                "ITB is generally used when there are specific requirements such as, sizes, GPUs, weight, etc. Additionally, the terms and conditions that will govern the contract are included in the ITB." +
+                "<UL>" +
+                "<li>Request for Proposal (RFP)</li>" +
+                "</UL>" +
+                "If pursuing an RFP, it is critical that you develop an <b>Evaluation Team</b> that will score bids. Additionally, the terms and conditions that will govern the contract are included in the RFP." +
+                "" +
+                " Do you understand these methods of formal solicitation?",
+        guide: "If you have questions about formal solicitations, visit this <a href'https://utsystem.edu/offices/contracts-and-procurement/152-invitation-bid-itb-purchase-value-greater-50000' target='_blank'> link<a/> for information regarding ITB and visit this <a href'https://utsystem.edu/offices/contracts-and-procurement/153-request-proposal-rfp' target='_blank'>link</a> for information regarding RFP." +
+                "<ul>" +
+                "<li>If you have additional information, contact cnp@utsystem.edu</li>" +
+                "</ul>",
+        yes: 36,
+        no: 'end10',
+      },
+      {
+        question: "You must create and submit an EUNA Procurement request. Have you submitted this request?",
+        guide: "If you have questions about this step, contact cnp@utsystem.edu",
+        yes: 37,
+        no: 'end10',
+      },
+      {
+        question: "Review the posting that Contracts and Procurements developed and decide whether to approve it or not. Have you reviewed and approved the posting?",
+        yes: 38,
+        no: 'end10',
+      },
+      {
+        question: "Contracts and Procurements will now finalize the posting and review solicitations submitted." +
+                "<ul>" +
+                "<li>If you are doing an ITB, you will now evaluate which bidders were selected and approve if you agree.</li>" +
+                "<li>If you are doing an RFP, the evaluation team will now score qualified proposals and submit them to you for approval.</li>" +
+                "</ul>" +
+                "Have you reviewed and approved the proposals submitted?",
+        yes: 39,
+        no: 'end10',
+      },
+      {
+        question: "Will your solicitation result in a PO or a Contract?",
+        type: "multi",
+        options: [
+          {label: "Purchase Order", next: 9,},
+          {label: "Contract", next: 11,},
+        ],
+      },
+      {
+        question: "Does your purchase contain any of the following:" +
+                "<ul>" +
+                "            <li>Software purchase or licensing?</li>" +
+                "            <li>Access to confidential or controlled data?</li>" +
+                "            <li>Deals with university-owned data?</li>",
+                guide:"<ul>" +
+                "            <li>If you have questions about what entails software purchases, contact OTIS.</li>"+
+                "            <li>If you have questions about what constitutes confidential or controlled data, visit <a href='https://www.utsystem.edu/offices/information-security/system-administration-information-security-program/data-classification' target='_blank'>this link.</a></li>" +
+                "            <li>If you have questions about what university-owned data is, contact Information Security.</li>",
+        yes: 6,
+        no: 7,
+      },
+      {
+        question: "Select what type of procurement you will pursue.",
+        type: "multi",
+        options: [
+          {label: "EAJ", next: 42,},
+          {label: "Formal Solicitation", next: 35, },
+          {label: "Group Purchasing Order", next: 48},
+        ],
+      },
+      {
+        question: "You have selected EAJ. Before proceeding with your justification, it is not necessary to defend the need for purchase, but it is necessary to:" +
+                "<ul>" +
+                "<li>Identify the unique features of the particular product or service</li>" +
+                "<li>Explain the need for the unique features of the product or service</li>"+
+                "<li>Explain why other products or services are not acceptable</li>" +
+                "</ul>" +
+                "Have you developed your EAJ justification?",
+        guide: "If you have additional questions regarding EAJs, visit this <a href='https://utsystem.edu/offices/contracts-and-procurement/17-exclusive-acquisition' target='_blank'>link</a>",
+        yes: 40,
+        no: 'end10',
+      },
+      {
+        question: "Is your purchase over $100,000?",
+        yes: 44,
+        no: 45,
+      },
+      {
+        question: "When the value of a purchase is expected to be $100,000 (or greater), and there is a possibility for subcontracting, you must require the supplier to complete a <a href=' https://utsystem.edu/offices/historically-underutilized-business/hub-subcontracting-plan-forms' target='_blank'>HSP.<a/> Have you done this?",
+        guide: "If you have questions regarding HSP, contact HUB@utsystem.edu.",
+        yes: 45,
+        no: 'end10',
+      },
+      {
+        question: "Is your purchase expected to exceed $1,000,000?",
+        yes: 46,
+        no: 33,
+      },
+      {
+        question: "According to Regents' Rule 10501, you are required to obtain OGC clearance if your purchase exceeds $1,000,000. You are required to fill out the following:" +
+                    "<ul>" +
+                    "<li><a href='https://www.utsystem.edu/general-procedure-contract-checklist/' target='_blank'>General Procedure Contract Checklist.</a></li>" +
+                    "<li><a href='https://www.utsystem.edu/documents/docs/general-counsel-documents/2016/contract-and-procurement-solicitation-intake-form' target='_blank'>Contract and Procurement Solicitation Intake Form.</a></li>" +
+                    "</ul>" +
+                    "Forward a copy of the General Procedure Contract Checklist, Contract and Procurement Solicitation Intake Form, and a copy of your revised contract to OGC. Have you done this and obtained OGC approval?",
+                yes: 33,
+                no: 'end10',
+      },
+      {
+        question: "Congratulations. Now, you need to wait for the vendor to accept the PO.",
+        yes: 'end4,',
+      },
+      {
+        question: "You have selected GPO. Review the following guidelines:" +
+                "<ul>" +
+                "<li>UTS Supply Chain Alliance (UTSSCA).</li>" +
+                "<ul>" +
+                "<li>Only one quote/proposal is required regardless of the amount of purchase.</li>" +
+                "</ul>" +
+                "<li>Vizient, Inc.</li>" +
+                "<ul>" +
+                "<li>For amounts between $15,000 to $3,000,000, only one quote/proposal is required</li>" +
+                "<li>For amounts greater than $3 million, a minimum of three quotes/proposals are required from suppliers in the same category</li>" +
+                "</ul>" +
+                "<li>Other GPOs</li>" +
+                "<ul>" +
+                "<li>A minimum of three quotes/proposals are required from suppliers in the same category for amounts greater than $15,000.</li>" +
+                "<li>If there are only two suppliers in a category, obtain a quote/proposal from both.</li>" +
+                "<li>If only one supplier exists, this must be documented in the purchasing file.</li>" +
+                "</ul>"+
+                "</ul>" +
+                "Have you carefully reviewed these guidelines?",
+        guide: "<ul>" +
+                "<li>Visit <a href='https://www.utsystem.edu/offices/business-affairs/group-purchasing-organization-gpo-accreditation-program' target='_blank'> this link</a> for a full list of all certified GPOs.</li>" +
+                "<li>If you have any questions about this step, contact cnp@utsystem.edu</li>" +
+                "</ul>",
+        yes: 49,
+        no: 'end10',
+      },
+      {
+        question: "Will you procure a service or goods?",
+        type: "multi",
+        options: [
+          {label: "Service", next: 50,},
+          {label: "Goods", next: 40,},
+        ],
+      },
+      {
+        question: "If you used a GPO other than UTSSCA or Vizient, Inc., you are required to submit three quotes (if vendors are available)." +
+                " Have you collected the necessary three quotes?",
+        guide: "If only two or one vendor (and have the justification), proceed.",
+        yes: 40,
+        no: 'end10',
+      },
+    ];
+
+    const results = {
+      end1: "STOP: You must first identify your procurement need before starting this process.",
+      end2: "STOP: You must develop a sufficient SOW that accurately captures your needs. Lackluster SOWs may result in substantial delays.",
+      end3: "STOP: Please contact cnp@utsystem.edu with questions about this step.",
+      end4: "Congratulations, you are done with this process.",
+      end5: "STOP, You must obtain the needed reviews/approvals before proceeding.",
+        end6: "STOP: You must perform a QA before proceeding.",
+        end7: "STOP: You need to create a CCARS request before proceeding.",
+        end8: "It may take some time for CnP to finish this process. Come back when CnP has sent you the executed contract.",
+        end9: "You must hold this meeting. It is part of your responsibilities as a DCA.",
+        end10: "Contact CnP for assistance.",
+    };
+
+    let currentStep = 0;
+    let history = [];
+
+    function displayStep() {
+      const step = steps[currentStep];
+      const container = document.querySelector('.container');
+      document.getElementById('question').innerHTML = step.question || '';
+      document.getElementById('guide').innerHTML = step.guide || '';
+      document.getElementById('result').innerHTML = '';
+
+
+      document.querySelector('.yes').style.display = 'none';
+      document.querySelector('.no').style.display = 'none';
+
+
+      document.querySelectorAll('.multi-button').forEach(btn => btn.remove());
+
+      if (step.type === 'multi' && step.options) {
+        step.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'button multi-button';
+          btn.innerText = opt.label;
+          btn.onclick = () => {
+            history.push(currentStep);
+            currentStep = opt.next;
+            displayStep();
+          };
+          container.appendChild(btn);
+        });
+      } else {
+        if (typeof step.yes !== 'undefined') document.querySelector('.yes').style.display = 'inline-block';
+        if (typeof step.no !== 'undefined') document.querySelector('.no').style.display = 'inline-block';
+      }
+
+      document.querySelector('.back').style.display = history.length ? 'inline-block' : 'none';
+    }
+
+    function next(answer) {
+      history.push(currentStep);
+      const step = steps[currentStep];
+      const nextStep = step[answer];
+      if (typeof nextStep === 'string') {
+        document.getElementById('question').innerText = '';
+        document.getElementById('guide').innerText = '';
+        document.getElementById('result').innerHTML = results[nextStep] || '';
+      } else if (typeof nextStep === 'number') {
+        currentStep = nextStep;
+        displayStep();
+      }
+    }
+
+    function back() {
+      if (history.length > 0) {
+        currentStep = history.pop();
+        displayStep();
+      }
+    }
+
+    displayStep();
+  </script>
+</body>
+</html>
