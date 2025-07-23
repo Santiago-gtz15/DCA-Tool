@@ -64,6 +64,7 @@
           { label: "$15,000 to $49,999.99", next: 4 },
           { label: "$50,000+", next: 5 },
           {label: "Amendment or Addendum", next: 11, },
+          {label: "Multiyear PO encumbrance", next: 9,},
         ]
       },
       {
@@ -110,11 +111,20 @@
                 "<ul>" +
                 "<li>An effort to include at least two HUBs should be made.</li>" +
                 "<li>An <a href= 'https://www.utsystem.edu/offices/contracts-and-procurement/17-exclusive-acquisition' target='_blank'>Exclusive Acquisition Justification<a/> is acceptable if only one supplier is capable of meeting your need.</li>" +
+                "<ul>" +
+                "<li>Proprietary Source: Applicable when goods or services are only available from a single source.</li>" +
+                "<li>Best Value: Applicable when one service provider meets the overall value required for the service.</li>" +
+                "<li>Emergency.</li>" +
+                "<li>Professional Services(e.g., architect, engineer, etc).</li>" +
+                "</ul>" +
                 "<li>If the total cost is over $100,000, an HSP must be developed.</li>" +
                 "<li>If the total cost is over $1,000,000, you must obtain approval from the Office of General Counsel.</li>" +
                 "</ul>" +
                 "Do you understand these requirements?",
-        guide: "If you have any questions about this purchase bracket, contact cnp@utsystem.edu.",
+        guide: "If you have any questions about this purchase bracket, contact cnp@utsystem.edu." +
+                "<ul>" +
+                "<li><b>Please note</b> that CnP must approve the EAJ before your department signs the form.</li>" +
+                "</ul>",
         yes: 41,
         no: 'end10',
       },
@@ -130,7 +140,7 @@
       },
       {
         question: "You have selected that your purchase does not need any additional reviews. Will your purchase be a contract or a purchase order?",
-        guide: "If you have any questions about the differences between contracts and purchase orders, contact cnp@utsystem.edu",
+        guide: "If you have any questions whether your purchase should be a PO or Contract, contact cnp@utsystem.edu",
         type: "multi",
         options: [
               {label: "Contract", next: 8,},
@@ -138,8 +148,8 @@
           ]
       },
       {
-        question: "Choose whether you are capable of drafting your own contract, or Contracts and Procurements needs to facilitate its development.",
-        guide: "Your decision should rest on your ability to fulfill your purchase confidently.",
+        question: "Choose whether you are capable of drafting your contract, or Contracts and Procurements needs to facilitate its development.",
+        guide: "Your decision should rest on your ability to draft a contract and fulfill your purchase confidently.",
         type: "multi",
         options: [
             {label: "Drafting own contract", next: 10,},
@@ -147,7 +157,10 @@
         ]
       },
       {
-        question: "You have selected Purchase Order. Since your PO does not need any additional reviews, you can create a requisition in PeopleSoft." +
+        question: "You have selected Purchase Order. Since your PO does not need any additional reviews, you can create a requisition for budget encumbrance into PeopleSoft." +
+                "<ul>" +
+                "<li>Additionally, whoever is the Department Signature Authority must approve the requisition.</li>" +
+                "</ul>"+
                 " Have you created the requisition and sent supporting material to cnp@utsystem.edu ?",
         guide: "At this point, the vendor should already be set up in PeopleSoft. If not, ensure that you send them an invitation.",
         yes: 47,
@@ -262,7 +275,13 @@
             no: 'end10',
         },
         {
-            question: "Does your request deal with the purchase, development, or use of an electronic system that will access Confidential Data, such as social security numbers, protected health information, or sensitive research data?",
+            question: "Does your request deal with any of the following?: " +
+                    "<ul>" +
+                    "<li>The purchase, development, or use of an electronic system that will access Confidential Data.</li>" +
+                    "<ul>" +
+                    "<li>Such as: social security numbers, protected health information, or sensitive research data.</li>" +
+                    "</ul>" +
+                    "</ul>",
             guide: "If you have questions regarding what applies as confidential data, visit <a href='https://www.utsystem.edu/offices/information-security/system-administration-information-security-program/data-classification' target='_blank'> this link<a/>.",
             yes: 26,
             no: 27,
@@ -277,13 +296,19 @@
             no:'end5',
         },
         {
-           question: "Is your contract related to the purchase of software, hardware, or cloud-based services?",
+           question: "Is your contract related to the purchase of the following:" +
+                   "<ul>" +
+                   "<li>Software</li>" +
+                   "<li>Hardware</li>" +
+                   "<li>Cloud-based services</li>" +
+                   "</ul>",
             guide: "If you have questions about what applies as software, hardware, or cloud-based services, contact OTIS.",
             yes: 28,
             no: 29,
         },
         {
-            question: "You must obtain OTIS approval for these types of purchases. Has OTIS approved this request?",
+            question: "You must obtain OTIS approval for these types of purchases." +
+                    " Has OTIS approved this request?",
             yes: 29,
             no: 'end5'
         },
@@ -294,10 +319,10 @@
             no: 31,
         },
         {
-           question: "Do the following:" +
+           question: "If yes, you must do the following:" +
                    "<ul>" +
                     "<li>Request a Voluntary Product Accessibility Template (VPAT) from the software provider</li>" +
-                    "<li>Complete the following <a href='https://www.utsystem.edu/sites/default/files/offices/contracts-procurement/Accessibility%20Intake%20Form%20-%20Template.docx' target='_blank'> intake form<a/></li>" +
+                    "Complete the following <a href='https://www.utsystem.edu/sites/default/files/offices/contracts-procurement/Accessibility%20Intake%20Form%20-%20Template.docx' target='_blank'> intake form<a/>." +
                     "</ul>" +
                     "Once obtained, email these forms to itpurchasing@utsystem.edu. Have you done this?",
             guide: "If the provider does not already have a VPAT filled out, direct them to this <a href='https://www.itic.org/policy/accessibility/vpat' target='_blank'>link<a/> so they can fill one out.",
@@ -311,7 +336,7 @@
             no: 43,
         },
         {
-            question: "Contact Information Security and Complete an <a href='https://utsys-eds.utsystem.edu/shibboleth-ds/index.html?entityID=https%3A%2F%2Fwww2.utsystem.edu%2Fshibb&return=https%3A%2F%2Fapps.utsystem.edu%2FShibboleth.sso%2FutDS%3FSAMLDS%3D1%26target%3Dcookie%253A1751918149_2900' target='_blank'> ISOTRAQ<a/>. Have you completed the ISOTRAQ?",
+            question: "Contact Information Security and complete an <a href='https://utsys-eds.utsystem.edu/shibboleth-ds/index.html?entityID=https%3A%2F%2Fwww2.utsystem.edu%2Fshibb&return=https%3A%2F%2Fapps.utsystem.edu%2FShibboleth.sso%2FutDS%3FSAMLDS%3D1%26target%3Dcookie%253A1751918149_2900' target='_blank'> ISOTRAQ<a/>. Have you completed the ISOTRAQ?",
             guide: "The typical timeline for ISOTRAQ review is 10 to 14 days. Contact Information Security for additional information.",
             yes: 43,
             no: 'end5',
@@ -424,7 +449,7 @@
         no: 45,
       },
       {
-        question: "When the value of a purchase is expected to be $100,000 (or greater), and there is a possibility for subcontracting, you must require the supplier to complete a <a href=' https://utsystem.edu/offices/historically-underutilized-business/hub-subcontracting-plan-forms' target='_blank'>HSP.<a/> Have you done this?",
+        question: "When the value of a purchase is expected to be $100,000 (or greater), and there is a possibility for subcontracting, you must require the supplier to complete an <a href=' https://utsystem.edu/offices/historically-underutilized-business/hub-subcontracting-plan-forms' target='_blank'>HSP.<a/> Have you done this?",
         guide: "If you have questions regarding HSP, contact HUB@utsystem.edu.",
         yes: 45,
         no: 'end10',
@@ -445,7 +470,7 @@
                 no: 'end10',
       },
       {
-        question: "Congratulations. Now, you need to wait for the vendor to accept the PO.",
+        question: "Congratulations. Now, you need to wait for CnP to review and approve the PO.",
         yes: 'end4,',
       },
       {
