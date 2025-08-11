@@ -16,11 +16,14 @@
     .back { background-color: #999; color: white; }
     .multi-button { background-color: #004b87; color: white; display: inline-block; }
     .result { font-size: 18px; font-weight: bold; color: darkred; margin-top: 20px; }
+    .summary-item { margin-bottom: 15px; padding: 10px; background-color: #f8f9fa; border-left: 4px solid #bf5700; }
+    .summary-question { font-weight: bold; margin-bottom: 5px; }
+    .summary-answer { color: #004b87; font-weight: bold; }
   </style>
 </head>
 <body>
   <header>
-      <img src="uts-logo-2023-09-horizontal-black(1).png" alt="UT System Logo" width="550" height="150">
+    <img src="uts-logo-2023-09-horizontal-black(1).png" alt="UT System Logo" width="500" height="150">
     <h1>Department Contract Administrator (DCA) Tool</h1>
   </header>
   <div class="container">
@@ -35,7 +38,7 @@
   <script>
     const steps = [
       {
-        question: "The first step of this process is to understand your procurement need. Have you identified your procurement need?",
+        question: "The first step of this process is to understand your procurement need.<br></br> Have you identified your procurement need?",
         guide: "Additionally, it is important to note:" +
             "<ul>" +
             "<li>The typical timeline for a formal solicitation and negotiating the awarded contract(s) can take up six months or longer from start to finish, depending on the complexity of the project.</li>" +
@@ -46,7 +49,7 @@
         no: 'end1',
       },
         {
-          question: "You must develop a Scope of Work (SOW) that identifies your specific needs. Have you developed an SOW that accurately captures your needs?",
+          question: "You must develop a Scope of Work (SOW) that identifies your specific needs.<br></br> Have you developed an SOW that accurately captures your needs?",
           guide: "If you have questions about whether your SOW is sufficient or not, contact cnp@utsystem.edu." +
                     "<ul>" +
                     "<li>Your scope of work must be <b>SUFFICIENTLY</b> detailed.</li>" +
@@ -129,8 +132,7 @@
         no: 'end10',
       },
       {
-        question: "You have selected that your purchase will need additional reviews. You will be prompted to obtain reviews and approvals from different departments as needed." +
-            " Do you understand this?",
+        question: "You have selected that your purchase will need additional reviews. You will be prompted to obtain reviews and approvals from different departments as needed.<br></br> Do you understand this?",
         guide: "If you have questions about this step, contact cnp@utsystem.edu" +
                 "<ul>" +
                 "<li><b>NOTE</b>, you are not required to obtain these approvals/reviews in a linear order.</li>" +
@@ -139,7 +141,7 @@
         no: 'end3',
       },
       {
-        question: "You have selected that your purchase does not need any additional reviews. Will your purchase be a contract or a purchase order?",
+        question: "You have selected that your purchase does not need any additional reviews.<br></br> Will your purchase result in a contract or a purchase order?",
         guide: "If you have any questions whether your purchase should be a PO or Contract, contact cnp@utsystem.edu",
         type: "multi",
         options: [
@@ -167,27 +169,25 @@
         no: 'end10',
       },
         {
-            question: "You have selected that you can continue this process on your own." +
-                " Are there insurance limits in your purchase?",
+            question: "You have selected that you can continue this process on your own.<br></br> Are there insurance limits in your purchase?",
             guide: "For questions regarding insurance limits, contact ORMinfo@utsystem.edu",
             yes: 12,
             no: 13,
         },
         {
-            question: "You must create and submit a <a href='https://na5.asccontracts.com/cms/Menu?locale=en_US&licenseeParam=UTS&OWASP_CSRFTOKEN=ZyYaIrWlU0DbC8B9CrFczVKffCzZSneUTcaZeslPrM4a' target='_blank'> CCARS <a/> request." +
-                " Have you done this?",
+            question: "You must create and submit a <a href='https://na5.asccontracts.com/cms/Menu?locale=en_US&licenseeParam=UTS&OWASP_CSRFTOKEN=ZyYaIrWlU0DbC8B9CrFczVKffCzZSneUTcaZeslPrM4a' target='_blank'> CCARS <a/> request.<br></br>Have you done this?",
             guide: "If you have any questions about CCARS, contact cnp@utsystem.edu",
             yes: 22,
             no: 'end7'
         },
         {
-            question: "If your contract deals with insurance limits, you must contact the Office of Risk Management and obtain their approval over the insurance in your contract. Have you done this?",
+            question: "If your contract deals with insurance limits, you must contact the Office of Risk Management and obtain their approval over the insurance in your contract.<br></br> Have you done this?",
             guide: "If you have questions regarding this step, contact ORMinfo@utsystem.edu",
             yes: 13,
             no: 'end5',
         },
         {
-            question: "Send the contract to the vendor and wait for their review and signature. Has the vendor reviewed and signed the contract?",
+            question: "Send the contract to the vendor and wait for their review and signature.<br></br> Has the vendor reviewed and signed the contract?",
             yes: 14,
             no:'end5',
         },
@@ -203,14 +203,13 @@
             no: 'end6',
         },
         {
-            question: "You must create a <a href='https://na5.asccontracts.com/cms/Menu?locale=en_US&licenseeParam=UTS&OWASP_CSRFTOKEN=ZyYaIrWlU0DbC8B9CrFczVKffCzZSneUTcaZeslPrM4a' target='_blank'> CCARS <a/> request." +
-                "Have you created a CCARS request?",
+            question: "You must create a <a href='https://na5.asccontracts.com/cms/Menu?locale=en_US&licenseeParam=UTS&OWASP_CSRFTOKEN=ZyYaIrWlU0DbC8B9CrFczVKffCzZSneUTcaZeslPrM4a' target='_blank'> CCARS <a/> request.<br></br> Have you created a CCARS request?",
             guide: "If you have any questions regarding CCARS, contact cnp@utsystem.edu",
             yes: 16,
             no: 'end7',
         },
         {
-            question: "Contracts and Procurements will ensure that the contract obtains any additional reviews. Has CnP sent you the contract?",
+            question: "Contracts and Procurements will ensure that the contract obtains any additional reviews.<br></br> Has CnP sent you the contract?",
             yes: 17,
             no: 'end8',
         },
@@ -226,18 +225,18 @@
             no: 'end9',
         },
         {
-            question: "You will now monitor Contract Compliance per the <a href'https://utsystem.edu/sites/default/files/offices/contracts-procurement/Forms_Guides/Contract%20Monitoring%20Plan%20and%20Close-Out%20Form%20Template.pdf' target='_blank'>Contract Monitoring Plan<a/>. Has the contractor met their obligations?",
+            question: "You will now monitor Contract Compliance per the <a href'https://utsystem.edu/sites/default/files/offices/contracts-procurement/Forms_Guides/Contract%20Monitoring%20Plan%20and%20Close-Out%20Form%20Template.pdf' target='_blank'>Contract Monitoring Plan<a/>.<br></br> Has the contractor met their obligations?",
             guide: "If you have any questions regarding the Contract Monitoring Plan, contact cnp@utsystem.edu",
             yes: 19,
             no: 'end10',
         },
         {
-            question: "You must now verify the contractor's invoice against the contract terms and ensure they match. Do these match?",
+            question: "You must now verify the contractor's invoice against the contract terms and ensure they match.<br></br> Do the invoice and contract terms match?",
             yes: 20,
             no: 'end10',
         },
         {
-            question: "Now, you must send the invoice to Financial Shared Services (FSS) for payment. Have you done this?",
+            question: "Now, you must send the invoice to Financial Shared Services (FSS) for payment.<br></br> Have you sent the invoice to FSS?",
             yes: 21,
             no: 'end10',
         },
@@ -250,27 +249,26 @@
                 "</ul>" +
                 "Have you completed these steps?",
             guide: "Contact cnp@utsystem.edu if you have questions regarding high-risk contracts or Closeout Forms.",
-            yes: 'end4',
+            yes: 51,
             no: 'end10',
         },
         {
-            question: "Contracts and Procurements will obtain any additional reviews. After this, CnP will forward you the agreement." +
-                " Have you reviewed the agreement and sent it to the vendor?",
+            question: "Contracts and Procurements will obtain any additional reviews needed for this contract. Once obtained, CnP will forward you the agreement.<br></br> Have you reviewed the agreement and sent it to the vendor?",
             yes: 23,
             no: 'end10',
         },
         {
-            question: "After receiving the signed agreement from the vendor, you must ensure:" +
+            question: "After receiving the signed agreement from the vendor, you must ensure that:" +
                 "<ul>" +
-                "<li>Vendor properly signed the agreement</li>" +
-                "<li>Vendor attached any required documentation</li>" +
+                "<li>The vendor properly signed the agreement</li>" +
+                "<li>The vendor attached any required documentation</li>" +
                 "</ul>" +
                 "Have you performed this Quality Assurance?",
             yes: 24,
             no: 'end6',
         },
         {
-            question: "Forward the signed agreement and any additional documentation to CnP. Have you done this?",
+            question: "After performing the QA, forward the signed agreement and any additional documentation to CnP. <br></br> Have you done this?",
             yes: 16,
             no: 'end10',
         },
@@ -287,7 +285,7 @@
             no: 27,
         },
         {
-            question: "Contact System-Wide Compliance (Privacy) and ensure that you obtain their approval before moving forward. Have you obtained such approval?",
+            question: "Contact System-Wide Compliance (Privacy) and ensure that you obtain their approval before moving forward.<br></br> Have you obtained approval from System-Wide Compliance?",
             guide: "<ul>" +
                     "<li>For data related to PHI or HIPAA, contact Cblanton@utsystem.edu</li>" +
                     "<li>For data related to PII, AI, etc., contact Jkennedy@utsystem.edu</li>" +
@@ -307,8 +305,7 @@
             no: 29,
         },
         {
-            question: "You must obtain OTIS approval for these types of purchases." +
-                    " Has OTIS approved this request?",
+            question: "You must obtain OTIS approval for these types of purchases.<br></br> Has OTIS approved this request?",
             yes: 29,
             no: 'end5'
         },
@@ -324,7 +321,7 @@
                     "<li>Request a Voluntary Product Accessibility Template (VPAT) from the software provider</li>" +
                     "Complete the following <a href='https://www.utsystem.edu/sites/default/files/offices/contracts-procurement/Accessibility%20Intake%20Form%20-%20Template.docx' target='_blank'> intake form<a/>." +
                     "</ul>" +
-                    "Once obtained, email these forms to itpurchasing@utsystem.edu. Have you done this?",
+                    "Once obtained, email these forms to itpurchasing@utsystem.edu.<br></br> Have you done this?",
             guide: "If the provider does not already have a VPAT filled out, direct them to this <a href='https://www.itic.org/policy/accessibility/vpat' target='_blank'>link<a/> so they can fill one out.",
             yes: 31,
             no: "end5"
@@ -336,7 +333,7 @@
             no: 43,
         },
         {
-            question: "Contact Information Security and complete an <a href='https://utsys-eds.utsystem.edu/shibboleth-ds/index.html?entityID=https%3A%2F%2Fwww2.utsystem.edu%2Fshibb&return=https%3A%2F%2Fapps.utsystem.edu%2FShibboleth.sso%2FutDS%3FSAMLDS%3D1%26target%3Dcookie%253A1751918149_2900' target='_blank'> ISOTRAQ<a/>. Have you completed the ISOTRAQ?",
+            question: "Contact Information Security and complete an <a href='https://utsys-eds.utsystem.edu/shibboleth-ds/index.html?entityID=https%3A%2F%2Fwww2.utsystem.edu%2Fshibb&return=https%3A%2F%2Fapps.utsystem.edu%2FShibboleth.sso%2FutDS%3FSAMLDS%3D1%26target%3Dcookie%253A1751918149_2900' target='_blank'> ISOTRAQ<a/>.<br></br> Have you completed the ISOTRAQ?",
             guide: "The typical timeline for ISOTRAQ review is 10 to 14 days. Contact Information Security for additional information.",
             yes: 43,
             no: 'end5',
@@ -372,7 +369,7 @@
                 "</UL>" +
                 "If pursuing an RFP, it is critical that you develop an <b>Evaluation Team</b> that will score bids. Additionally, the terms and conditions that will govern the contract are included in the RFP." +
                 "" +
-                " Do you understand these methods of formal solicitation?",
+                "<br></br>Do you understand these methods of formal solicitation?",
         guide: "If you have questions about formal solicitations, visit this <a href'https://utsystem.edu/offices/contracts-and-procurement/152-invitation-bid-itb-purchase-value-greater-50000' target='_blank'> link<a/> for information regarding ITB and visit this <a href'https://utsystem.edu/offices/contracts-and-procurement/153-request-proposal-rfp' target='_blank'>link</a> for information regarding RFP." +
                 "<ul>" +
                 "<li>If you have additional information, contact cnp@utsystem.edu</li>" +
@@ -381,13 +378,13 @@
         no: 'end10',
       },
       {
-        question: "You must create and submit an EUNA Procurement request. Have you submitted this request?",
+        question: "You must create and submit an EUNA Procurement request.<br></br> Have you submitted this request?",
         guide: "If you have questions about this step, contact cnp@utsystem.edu",
         yes: 37,
         no: 'end10',
       },
       {
-        question: "Review the posting that Contracts and Procurements developed and decide whether to approve it or not. Have you reviewed and approved the posting?",
+        question: "Review the posting that Contracts and Procurements developed and decide whether to approve it or not.<br></br> Have you reviewed and approved the posting?",
         yes: 38,
         no: 'end10',
       },
@@ -439,7 +436,10 @@
                 "<li>Explain why other products or services are not acceptable</li>" +
                 "</ul>" +
                 "Have you developed your EAJ justification?",
-        guide: "If you have additional questions regarding EAJs, visit this <a href='https://utsystem.edu/offices/contracts-and-procurement/17-exclusive-acquisition' target='_blank'>link</a>",
+        guide: "If you have additional questions regarding EAJs, visit this <a href='https://utsystem.edu/offices/contracts-and-procurement/17-exclusive-acquisition' target='_blank'>link</a>" +
+                "<ul>" +
+                "<li><b>Please note</b> that CnP must approve the EAJ before your department signs the form.</li>" +
+                "</ul>",
         yes: 40,
         no: 'end10',
       },
@@ -449,7 +449,7 @@
         no: 45,
       },
       {
-        question: "When the value of a purchase is expected to be $100,000 (or greater), and there is a possibility for subcontracting, you must require the supplier to complete an <a href=' https://utsystem.edu/offices/historically-underutilized-business/hub-subcontracting-plan-forms' target='_blank'>HSP.<a/> Have you done this?",
+        question: "When the value of a purchase is expected to be $100,000 (or greater), and there is a possibility for subcontracting, you must require the supplier to complete an <a href=' https://utsystem.edu/offices/historically-underutilized-business/hub-subcontracting-plan-forms' target='_blank'>HSP<a/>.<br></br> Have you done this?",
         guide: "If you have questions regarding HSP, contact HUB@utsystem.edu.",
         yes: 45,
         no: 'end10',
@@ -465,13 +465,14 @@
                     "<li><a href='https://www.utsystem.edu/general-procedure-contract-checklist/' target='_blank'>General Procedure Contract Checklist.</a></li>" +
                     "<li><a href='https://www.utsystem.edu/documents/docs/general-counsel-documents/2016/contract-and-procurement-solicitation-intake-form' target='_blank'>Contract and Procurement Solicitation Intake Form.</a></li>" +
                     "</ul>" +
-                    "Forward a copy of the General Procedure Contract Checklist, Contract and Procurement Solicitation Intake Form, and a copy of your revised contract to OGC. Have you done this and obtained OGC approval?",
+                    "Forward a copy of the General Procedure Contract Checklist, Contract and Procurement Solicitation Intake Form, and a copy of your revised contract to OGC.<br></br> Have you revised your contract and obtained OGC approval?",
                 yes: 33,
                 no: 'end10',
       },
       {
-        question: "Congratulations. Now, you need to wait for CnP to review and approve the PO.",
-        yes: 'end4,',
+        question: "Congratulations!<br></br> Now, you need to wait for CnP to review and approve the PO.",
+        guide: "Click Yes to continue to a Summary Process page",
+        yes: 51,
       },
       {
         question: "You have selected GPO. Review the following guidelines:" +
@@ -509,11 +510,15 @@
         ],
       },
       {
-        question: "If you used a GPO other than UTSSCA or Vizient, Inc., you are required to submit three quotes (if vendors are available)." +
-                " Have you collected the necessary three quotes?",
+        question: "If you used a GPO other than UTSSCA or Vizient, Inc., you are required to submit three quotes (if vendors are available).<br></br> Have you collected the necessary three quotes?",
         guide: "If only two or one vendor (and have the justification), proceed.",
         yes: 40,
         no: 'end10',
+      },
+      {
+        question: "Process Summary",
+                guide: "Below is a summary of your responses throughout the procurement process. You can print this page for your records.",
+        type: "summary"
       },
     ];
 
@@ -523,58 +528,102 @@
       end3: "STOP: Please contact cnp@utsystem.edu with questions about this step.",
       end4: "Congratulations, you are done with this process.",
       end5: "STOP, You must obtain the needed reviews/approvals before proceeding.",
-        end6: "STOP: You must perform a QA before proceeding.",
-        end7: "STOP: You need to create a CCARS request before proceeding.",
-        end8: "It may take some time for CnP to finish this process. Come back when CnP has sent you the executed contract.",
-        end9: "You must hold this meeting. It is part of your responsibilities as a DCA.",
-        end10: "Contact CnP for assistance.",
+      end6: "STOP: You must perform a QA before proceeding.",
+      end7: "STOP: You need to create a CCARS request before proceeding.",
+      end8: "It may take some time for CnP to finish this process. Come back when CnP has sent you the executed contract.",
+      end9: "You must hold this meeting. It is part of your responsibilities as a DCA.",
+      end10: "Contact CnP for assistance."
     };
 
     let currentStep = 0;
     let history = [];
+    let responses = [];
 
     function displayStep() {
       const step = steps[currentStep];
+      if (!step) return;
       const container = document.querySelector('.container');
       document.getElementById('question').innerHTML = step.question || '';
       document.getElementById('guide').innerHTML = step.guide || '';
       document.getElementById('result').innerHTML = '';
-
-
       document.querySelector('.yes').style.display = 'none';
       document.querySelector('.no').style.display = 'none';
-
-
       document.querySelectorAll('.multi-button').forEach(btn => btn.remove());
-
       if (step.type === 'multi' && step.options) {
         step.options.forEach(opt => {
           const btn = document.createElement('button');
           btn.className = 'button multi-button';
           btn.innerText = opt.label;
           btn.onclick = () => {
+            responses.push({ stepIndex: currentStep, question: cleanQuestionText(step.question), answer: opt.label, type: 'multi' });
             history.push(currentStep);
             currentStep = opt.next;
             displayStep();
           };
           container.appendChild(btn);
         });
+      } else if (step.type === 'summary') {
+        displaySummary();
       } else {
         if (typeof step.yes !== 'undefined') document.querySelector('.yes').style.display = 'inline-block';
         if (typeof step.no !== 'undefined') document.querySelector('.no').style.display = 'inline-block';
       }
-
       document.querySelector('.back').style.display = history.length ? 'inline-block' : 'none';
     }
 
+    function cleanQuestionText(questionHtml) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = questionHtml;
+      return tempDiv.textContent || tempDiv.innerText || '';
+    }
+
+    function displaySummary() {
+      let summaryHtml = '<h2>Your Process Summary</h2>';
+      if (responses.length === 0) {
+        summaryHtml += '<p>No responses recorded.</p>';
+      } else {
+        responses.forEach((response, index) => {
+          summaryHtml += `<div class="summary-item"><div class="summary-question">${index + 1}. ${response.question}</div><div class="summary-answer">Answer: ${response.answer}</div></div>`;
+        });
+      }
+      summaryHtml += `<div style="margin-top: 30px; text-align: center;"><button onclick="window.print()" class="button" style="background-color:#004b87; color:white; margin-right: 10px;">Print Summary</button><button onclick="exportSummary()" class="button" style="background-color:#bf5700; color:white;">Download Summary</button></div>`;
+      document.getElementById('guide').innerHTML = summaryHtml;
+      document.querySelector('.yes').style.display = 'none';
+      document.querySelector('.no').style.display = 'none';
+    }
+
+    function exportSummary() {
+      let summaryText = "UT System DCA Tool - Process Summary\n" + "=".repeat(50) + "\n\n";
+      responses.forEach((response, index) => {
+        summaryText += `${index + 1}. ${response.question}\n   Answer: ${response.answer}\n\n`;
+      });
+      summaryText += `\nGenerated: ${new Date().toLocaleDateString()}\n`;
+      const blob = new Blob([summaryText], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'DCA_Process_Summary.txt';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
+
     function next(answer) {
-      history.push(currentStep);
       const step = steps[currentStep];
+      if (!step) return;
+      responses.push({ stepIndex: currentStep, question: cleanQuestionText(step.question), answer: answer === 'yes' ? 'Yes' : 'No', type: 'yesno' });
+      history.push(currentStep);
       const nextStep = step[answer];
       if (typeof nextStep === 'string') {
-        document.getElementById('question').innerText = '';
-        document.getElementById('guide').innerText = '';
-        document.getElementById('result').innerHTML = results[nextStep] || '';
+        if (nextStep === 'summary') {
+          currentStep = steps.length - 1;
+          displayStep();
+        } else {
+          document.getElementById('question').innerText = '';
+          document.getElementById('guide').innerText = '';
+          document.getElementById('result').innerHTML = results[nextStep] || '';
+        }
       } else if (typeof nextStep === 'number') {
         currentStep = nextStep;
         displayStep();
@@ -583,6 +632,7 @@
 
     function back() {
       if (history.length > 0) {
+        if (responses.length > 0) responses.pop();
         currentStep = history.pop();
         displayStep();
       }
